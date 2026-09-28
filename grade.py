@@ -25,6 +25,10 @@ import os
 import sys
 from pathlib import Path
 
+# Không tự nạp pytest plugin toàn hệ thống (ví dụ plugin ROS 2 launch_testing).
+# Các plugin đó không thuộc bài lab và có thể thiếu dependency trong virtualenv.
+os.environ.setdefault("PYTEST_DISABLE_PLUGIN_AUTOLOAD", "1")
+
 import pytest
 
 ROOT = Path(__file__).parent

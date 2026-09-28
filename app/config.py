@@ -43,6 +43,17 @@ class Settings(BaseSettings):
     # TODO (CP1): khai báo 6 trường theo bảng trên, ví dụ:
     #     port: int = 8000
     #     agent_api_key: str
+    port: int = 8000
+    agent_api_key: str
+    redis_url: str = "redis://localhost:6379/0"
+    rate_limit_per_minute: int = 10
+    monthly_budget_usd: float = 10.0
+    log_level: str = "INFO"
+
+    llm_provider: str = "mock"
+    openrouter_api_key: str | None = None
+    openrouter_model: str = "google/gemini-3.1-flash-lite"
+    openrouter_base_url: str = "https://openrouter.ai/api/v1"
 
 
 @lru_cache(maxsize=1)
