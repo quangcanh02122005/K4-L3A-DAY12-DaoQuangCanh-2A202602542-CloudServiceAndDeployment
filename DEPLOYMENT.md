@@ -73,13 +73,37 @@ done; echo
 
 ## Kết Quả Chạy Thật
 
-Dán output của các lệnh trên vào đây:
-
 ```
-/health → 200 {"status":"ok","service":"day12-agent","version":"1.0.0"}
-/ready → 200 {"status":"ready","redis":true}
-/ask không có API key → 401 {"detail":"invalid or missing API key"}
-/ask có API key → chờ kiểm tra sau khi rotate khóa đã lộ
+=== 1. /health ===
+HTTP/2 200
+content-type: application/json
+server: railway-hikari
+
+{"status":"ok","service":"day12-agent","version":"1.0.0"}
+
+=== 2. /ready ===
+HTTP/2 200
+content-type: application/json
+server: railway-hikari
+
+{"status":"ready","redis":true}
+
+=== 3. /ask không có key → 401 ===
+HTTP/2 401
+content-type: application/json
+server: railway-hikari
+
+{"detail":"invalid or missing API key"}
+
+=== 4. /ask có key → 200 ===
+HTTP/2 200
+content-type: application/json
+server: railway-hikari
+
+{"answer":"Câu hỏi hay. Deploy là gì thường được giải quyết bằng cách chuẩn hóa môi trường chạy: cùng một image chạy giống nhau ở laptop và trên cloud.","user_id":"sv-test","history_length":0,"cost_usd":2.145e-05,"tokens":{"in":3,"out":35}}
+
+=== 5. Rate limit (15 lần) ===
+200 200 200 200 200 200 200 200 200 429 429 429 200 200 200
 ```
 
 ## Ảnh Chụp Màn Hình
@@ -87,7 +111,7 @@ Dán output của các lệnh trên vào đây:
 Đặt ảnh trong thư mục `screenshots/`:
 
 - `screenshots/dashboard.png` — trang quản lý service trên platform
-- `screenshots/health.png` — kết quả gọi `/health` từ trình duyệt hoặc curl
+- `screenshots/health.png` — kết quả gọi `/health` và `/ready` thành công
 
 ---
 
